@@ -1,0 +1,66 @@
+.team-screen {
+  --ink: #090513;
+  --cream: #faf6ee;
+  --cyan: #31e7ff;
+  --line: rgba(255, 255, 255, 0.22);
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+  color: var(--cream);
+  font-family: "Space Grotesk", sans-serif;
+}
+
+.team-screen .video-layer,
+.team-screen .cosmic-wash,
+.team-screen .starfield {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+}
+
+.team-screen .video-layer {
+  z-index: 0;
+  background: #05020d;
+}
+
+.team-screen .video-layer video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.28;
+}
+
+.team-wash {
+  z-index: 1;
+  background: radial-gradient(circle at 50% 20%, rgba(141, 69, 255, 0.32) 0, transparent 42%),
+    radial-gradient(circle at 85% 80%, rgba(49, 231, 255, 0.2) 0, transparent 38%),
+    radial-gradient(circle at 10% 85%, rgba(250, 59, 193, 0.16) 0, transparent 36%),
+    linear-gradient(180deg, rgba(5, 2, 13, 0.4) 0%, rgba(5, 2, 13, 0.75) 100%);
+}
+
+.team-screen .starfield {
+  z-index: 2;
+  overflow: hidden;
+}
+
+.team-screen .starfield i {
+  position: absolute;
+  background: #fff;
+  border-radius: 50%;
+  box-shadow: 0 0 8px 2px var(--cyan);
+  opacity: 0.65;
+  animation: team-blink 3.5s infinite alternate;
+}
+
+@keyframes team-blink {
+  to {
+    opacity: 0.08;
+    transform: scale(0.3);
+  }
+}
+
+.team-content {
+  position: relative;
+  z-index: 5;
+  padding: 140px 5vw 100px;
+}

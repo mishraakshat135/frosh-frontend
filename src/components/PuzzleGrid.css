@@ -1,0 +1,118 @@
+.puzzle-grid-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.puzzle-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  overflow: visible;
+}
+
+.puzzle-path {
+  fill: rgba(255, 255, 255, 0.045);
+  stroke: rgba(255, 255, 255, 0.2);
+  stroke-width: 1.6;
+  stroke-linejoin: round;
+  transition: fill 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), stroke 0.35s ease,
+    filter 0.35s ease;
+}
+
+.puzzle-path.is-hover {
+  stroke: #f5d0fe;
+  stroke-width: 2.2;
+  filter: drop-shadow(0 0 10px rgba(217, 70, 239, 0.85))
+    drop-shadow(0 0 26px rgba(168, 85, 247, 0.55));
+}
+
+.puzzle-overlay {
+  position: relative;
+  display: grid;
+  width: 100%;
+  height: 100%;
+}
+
+.puzzle-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  cursor: pointer;
+  outline: none;
+  padding: 6%;
+  text-align: center;
+  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+  z-index: 1;
+}
+
+.puzzle-cell.is-hover {
+  transform: scale(1.16);
+  z-index: 5;
+}
+
+.puzzle-cell-empty {
+  pointer-events: none;
+}
+
+.puzzle-avatar {
+  width: 38%;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  font-weight: 700;
+  font-size: clamp(9px, 2.1vw, 14px);
+  color: #e9d5ff;
+  transition: border-color 0.35s ease, box-shadow 0.35s ease;
+}
+
+.puzzle-cell.is-hover .puzzle-avatar {
+  border-color: #f0abfc;
+  box-shadow: 0 0 22px rgba(236, 72, 153, 0.65);
+}
+
+.puzzle-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.puzzle-name {
+  margin: 4px 0 0;
+  font-size: clamp(8px, 1.5vw, 11.5px);
+  font-weight: 600;
+  line-height: 1.2;
+  color: rgba(255, 255, 255, 0.5);
+  transition: color 0.35s ease, text-shadow 0.35s ease;
+}
+
+.puzzle-cell.is-hover .puzzle-name {
+  color: #fdf4ff;
+  font-weight: 800;
+  text-shadow: 0 0 14px rgba(217, 70, 239, 0.8);
+}
+
+.puzzle-role {
+  margin: 0;
+  font-size: clamp(6.5px, 1.1vw, 9px);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: rgba(217, 70, 239, 0.5);
+  opacity: 0;
+  transition: color 0.35s ease, opacity 0.35s ease;
+}
+
+.puzzle-cell.is-hover .puzzle-role {
+  color: #f9a8d4;
+  opacity: 1;
+}

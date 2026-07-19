@@ -1,0 +1,116 @@
+.hex-grid-wrap {
+  position: relative;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.hex-cell {
+  position: absolute;
+  cursor: pointer;
+  outline: none;
+  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), z-index 0s;
+  transform-origin: 50% 50%;
+  z-index: 1;
+}
+
+.hex-cell:hover,
+.hex-cell:focus-visible {
+  transform: scale(1.18);
+  z-index: 20;
+}
+
+.hex-shape {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  background: rgba(255, 255, 255, 0.22);
+  transition: background 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.35s ease;
+}
+
+.hex-cell:hover .hex-shape,
+.hex-cell:focus-visible .hex-shape {
+  background: linear-gradient(135deg, #a855f7, #d946ef 55%, #ec4899);
+  filter: drop-shadow(0 0 10px rgba(217, 70, 239, 0.85))
+    drop-shadow(0 0 24px rgba(168, 85, 247, 0.5));
+}
+
+.hex-inner {
+  position: absolute;
+  inset: 5.5%;
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  background: rgba(12, 6, 20, 0.72);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  text-align: center;
+  padding: 10%;
+  transition: background 0.35s ease;
+}
+
+.hex-cell:hover .hex-inner,
+.hex-cell:focus-visible .hex-inner {
+  background: rgba(20, 4, 28, 0.35);
+}
+
+.hex-avatar {
+  width: 40%;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  font-weight: 700;
+  font-size: clamp(8px, 1.9vw, 13px);
+  color: #e9d5ff;
+  transition: border-color 0.35s ease, box-shadow 0.35s ease;
+}
+
+.hex-cell:hover .hex-avatar,
+.hex-cell:focus-visible .hex-avatar {
+  border-color: #f5d0fe;
+  box-shadow: 0 0 16px rgba(236, 72, 153, 0.7);
+}
+
+.hex-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hex-name {
+  margin: 3px 0 0;
+  font-size: clamp(6.5px, 1.25vw, 10px);
+  font-weight: 600;
+  line-height: 1.15;
+  color: rgba(255, 255, 255, 0.55);
+  transition: color 0.35s ease, text-shadow 0.35s ease;
+}
+
+.hex-cell:hover .hex-name,
+.hex-cell:focus-visible .hex-name {
+  color: #fdf4ff;
+  font-weight: 800;
+  text-shadow: 0 0 12px rgba(217, 70, 239, 0.85);
+}
+
+.hex-role {
+  margin: 0;
+  font-size: clamp(5.5px, 1vw, 8px);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(217, 70, 239, 0.5);
+  opacity: 0;
+  transition: color 0.35s ease, opacity 0.35s ease;
+}
+
+.hex-cell:hover .hex-role,
+.hex-cell:focus-visible .hex-role {
+  color: #f9a8d4;
+  opacity: 1;
+}

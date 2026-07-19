@@ -1,0 +1,83 @@
+.sponsor-main-card{
+  position:relative;
+  overflow:hidden;
+  border-radius:20px;
+  background:#fff;
+  padding:28px 34px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition:transform 300ms ease, box-shadow 300ms ease;
+}
+.sponsor-main-card img{
+  width:100%;
+  max-width:280px;
+  height:110px;
+  object-fit:contain;
+  display:block;
+  position:relative;
+  z-index:0;
+}
+.sponsor-main-card::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:linear-gradient(-45deg,transparent 0%,rgba(34,211,238,0.35) 50%,transparent 100%);
+  background-size:250% 100%;
+  background-repeat:no-repeat;
+  background-position:-100% 0;
+  opacity:0;
+  transition:background-position 1600ms ease, opacity 400ms ease;
+  pointer-events:none;
+  z-index:1;
+}
+.sponsor-main-card:hover{
+  transform:scale(1.04);
+  box-shadow:0 16px 40px rgba(0,0,0,0.55), 0 0 0 1px rgba(34,211,238,0.4);
+}
+.sponsor-main-card:hover::before{
+  background-position:200% 0;
+  opacity:1;
+}
+
+.sponsor-carousel{
+  width:100%;
+  overflow:hidden;
+  position:relative;
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);
+  mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);
+}
+.sponsor-track{
+  display:flex;
+  width:max-content;
+  will-change:transform;
+  animation:sponsor-scroll 26s linear infinite;
+}
+.sponsor-carousel:hover .sponsor-track{
+  animation-play-state:paused;
+}
+@keyframes sponsor-scroll{
+  from{ transform:translateX(0); }
+  to{ transform:translateX(-50%); }
+}
+.sponsor-card{
+  flex-shrink:0;
+  width:220px;
+  height:130px;
+  margin-right:18px;
+  border-radius:14px;
+  background:#fff;
+  border:1px solid rgba(255,255,255,0.15);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+  box-sizing:border-box;
+  padding:16px;
+}
+.sponsor-card img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  display:block;
+}
