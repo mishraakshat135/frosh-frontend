@@ -19,19 +19,23 @@ export default function Login() {
     // Backend isn't connected yet — someone else owns that piece.
     // For now, clicking Login just gets you straight into the frontend.
     setTimeout(() => {
-      localStorage.setItem(
-        'user',
-        JSON.stringify({ _id: 'demo-user', username: formData.username || 'Guest' })
-      )
-      setStatus('success')
+  localStorage.setItem(
+    "user",
+    JSON.stringify({
+      _id: "demo-user",
+      username: formData.username || "Guest",
+    })
+  );
+
+  // Show intro only once after login
+  sessionStorage.setItem("showIntro", "true");
+
+  setStatus("success");
+
   setTimeout(() => {
-  navigate("/home", {
-    state: {
-      showIntro: true,
-    },
-  });
-}, 700);
-    }, 500)
+    navigate("/home");
+  }, 700);
+}, 500);
   }
 
   return (

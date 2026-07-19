@@ -1,37 +1,45 @@
-
-import Hero from "./hero"
-import Events from "./Events"
-import About from "./aboutUs"
-import Map from "./map"
-import Sponsors from "./sponsors"
-import { useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
+import Hero from "./hero";
+import Events from "./Events";
+import About from "./aboutUs";
+import Map from "./map";
+import Sponsors from "./sponsors";
 
 export default function Home() {
-  const location = useLocation()
+  const [showIntro, setShowIntro] = useState(false);
+
+  useEffect(() => {
+    const shouldShow = sessionStorage.getItem("showIntro") === "true";
+
+    if (shouldShow) {
+      setShowIntro(true);
+
+      // Remove it immediately so refresh won't show it again
+      sessionStorage.removeItem("showIntro");
+    }
+  }, []);
+
   return (
     <main className="min-h-screen overflow-x-hidden bg-black text-white scroll-smooth">
-      <>
-        <section id="home" data-cursor="#22d3ee">
-          <Hero showIntro={location.state?.showIntro ?? false} />
-        </section>
+      <section id="home">
+        <Hero showIntro={showIntro} />
+      </section>
 
-        <section id="events" data-cursor="#f97316">
-          <Events />
-        </section>
+      <section id="events">
+        <Events />
+      </section>
 
-        <section id="about" data-cursor="#a855f7" >
-          <About />
-        </section>
+      <section id="about">
+        <About />
+      </section>
 
-        <section id="map" data-cursor="#22c55e">
-          <Map />
-        </section>
+      <section id="map">
+        <Map />
+      </section>
 
-        <section id="sponsors" data-cursor="#facc15">
-          <Sponsors />
-        </section>
-      </>
+      <section id="sponsors">
+        <Sponsors />
+      </section>
     </main>
-
-  )
+  );
 }

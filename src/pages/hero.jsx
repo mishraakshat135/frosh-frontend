@@ -18,7 +18,15 @@ export default function Hero({ scrollHeight = '400vh', showIntro = false }) {
     const currentFrameRef = useRef(0)
     const frameRef = useRef(0)
     const heroRef = useRef(null)
-    const [playIntro, setPlayIntro] = useState(showIntro);
+    const [playIntro, setPlayIntro] = useState(false);
+
+useEffect(() => {
+    if (showIntro) {
+        setPlayIntro(true);
+    }
+}, [showIntro]);
+
+    
     useEffect(() => {
         gsap.from(canvasRef.current, {
             opacity: 0,
@@ -58,7 +66,7 @@ export default function Hero({ scrollHeight = '400vh', showIntro = false }) {
             drawFrame(currentFrameRef.current);
         }
 
-
+        
 
         for (let i = 1; i <= FRAME_COUNT; i++) {
             const img = new Image();
