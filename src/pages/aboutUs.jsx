@@ -84,8 +84,20 @@ export default function About() {
               <img src={about1} alt="Frosh event" className="h-full w-full object-cover rounded-[10px]" />,
               <img 
               src={about2} alt="Frosh event" className="h-full w-full object-cover rounded-[10px]" />,
-              <img 
-               src={Logo} alt="Frosh event" className="h-full w-full object-cover rounded-[10px]" />,
+              
+              <div
+                key="p3"
+                className="folder-logo-paper"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  navigate("/media");
+                }}
+              >
+                <img className="-mt-3" src={Logo} alt="Frosh 2026" />
+                {/* <span className="">View Media</span> */}
+              </div>,
+              // <img 
+              //  src={Logo} alt="Frosh event" className="h-full w-full object-cover rounded-[10px]" />,
 
             ]}
             size={3} color="#22d3ee" className="custom-folder drop-shadow-[0_0_25px_rgba(34,211,238,0.5)]" />

@@ -63,7 +63,7 @@ export default function Home() {
         {/* Footer Content */}
         <div style={{ position: "relative", zIndex: 1 }}>
           <div
-          className="flex flex-col md:flex-row items-center justify-center md:gap-10"
+          className="flex flex-col md:flex-row items-center justify-around md:gap-10"
             // style={{
             //   display: "grid",
             //   gridTemplateColumns: "1fr auto 1fr",
@@ -109,7 +109,7 @@ export default function Home() {
 
             {/* Logo - Center */}
             <div
-              className="text-center flex flex-column items-cneter mr-45"
+              className="text-center flex flex-column items-cneter w-20 md:w-60  md:mr-65"
             // style={{ 
             //   textAlign: "center",
             //   display: "flex",

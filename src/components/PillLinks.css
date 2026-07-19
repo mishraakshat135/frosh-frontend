@@ -5,4 +5,4 @@
 .pill .label-stack{position:relative;display:inline-block;line-height:1;z-index:2}
 .pill .pill-label{position:relative;z-index:2;display:inline-block;line-height:1;will-change:transform}
 .pill .pill-label-hover{position:absolute;left:0;top:0;color:var(--hover-text,#fff);z-index:3;display:inline-block;will-change:transform,opacity}
-.pill.is-active::after{content:'';position:absolute;bottom:-6px;left:50%;transform:translateX(-50%);width:8px;height:8px;background:var(--base,#090513);border-radius:50px;z-index:4}
+.pill.is-active::after{content:'';position:absolute;bottom:-6px;left:50%;transform:translateX(-50%);width:100%;height:8px;background:var(--base,#090513);z-index:4}
