@@ -24,7 +24,13 @@ export default function Login() {
         JSON.stringify({ _id: 'demo-user', username: formData.username || 'Guest' })
       )
       setStatus('success')
-      setTimeout(() => navigate('/home'), 700)
+  setTimeout(() => {
+  navigate("/home", {
+    state: {
+      showIntro: true,
+    },
+  });
+}, 700);
     }, 500)
   }
 

@@ -3,18 +3,18 @@ import LogoSplit from "./LogoSplit";
 import { motion } from "framer-motion"
 
 
-export default function Intro() {
+export default function Intro({onComplete}) {
   const [show, setShow] = useState(true);
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      setShow(false)
+      onComplete?.()
     }, 4500);
 
     return () => clearTimeout(timer);
   }, []);
 
-  if (!show) return null;
+
 
   return (
     

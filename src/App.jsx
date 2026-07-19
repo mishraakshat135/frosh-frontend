@@ -20,7 +20,7 @@ import Media from "./pages/Media";
 
 function App() {
   const location = useLocation()
-  const hideNavbar = location.pathname === "/"
+  const hideNavbar = location.pathname === "/" || location.pathname === "/media" || location.pathname === "/campusmap" || location.pathname === "/team"
   return (
     <>
     <Cursor />

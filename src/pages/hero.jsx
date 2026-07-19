@@ -11,14 +11,14 @@ const user = JSON.parse(localStorage.getItem("user"));
 const FRAME_COUNT = 66;
 const FRAME_PATH = (i) => `/frames_2/frame_${String(i).padStart(6, '0')}.webp`;
 
-export default function Hero({ scrollHeight = '400vh' }) {
+export default function Hero({ scrollHeight = '400vh', showIntro = false }) {
     const wrapperRef = useRef(null);
     const canvasRef = useRef(null)
     const imagesRef = useRef([]);
     const currentFrameRef = useRef(0)
     const frameRef = useRef(0)
     const heroRef = useRef(null)
-
+    const [playIntro, setPlayIntro] = useState(showIntro);
     useEffect(() => {
         gsap.from(canvasRef.current, {
             opacity: 0,
@@ -99,11 +99,15 @@ export default function Hero({ scrollHeight = '400vh' }) {
             window.removeEventListener("resize", resizeCanvas)
             ScrollTrigger.getAll().forEach(trigger => trigger.kill())
         }
-    }, [])
+    }, [playIntro])
 
     return (
         <>
-            <Intro />
+           {playIntro && (
+  <Intro
+    onComplete={() => setPlayIntro(false)}
+  />
+)}
             <LogoSplit />
             <section ref={wrapperRef} className="relative" style={{ height: scrollHeight }}>
                 <div ref={heroRef} className="relative h-screen w-full overflow-hidden flex items-center justify-center">
