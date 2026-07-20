@@ -1,11 +1,14 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft } from "lucide-react";
-import MediaCarousel from "../components/MediaCarousel";
+import { ArrowLeft, Maximize2 } from "lucide-react";
+import CardSwap, { Card } from "../components/CardSwap/CardSwap";
+import Lightbox from "../components/Lightbox";
 import { mediaPhotos } from "../data/mediaPhotos";
 import "./media.css";
 
 export default function Media() {
   const navigate = useNavigate();
+  const [activeIndex, setActiveIndex] = useState(null);
 
   return (
     <div className="media-screen">
@@ -47,15 +50,46 @@ export default function Media() {
               Media
             </h1>
             <p className="mx-auto mt-5 max-w-xl text-sm leading-7 text-white/60 md:text-base">
-              A spinning frame of everything Frosh — hover to pause on any photo.
+              A stack of everything Frosh — tap any photo to see it full size.
             </p>
           </div>
 
-          <div className="mt-14 flex justify-center">
-            <MediaCarousel photos={mediaPhotos} />
+          <div className="media-cardswap-stage">
+            <CardSwap
+              width={340}
+              height={440}
+              cardDistance={55}
+              verticalDistance={60}
+              delay={4200}
+              pauseOnHover
+              skewAmount={5}
+              easing="elastic"
+              onCardClick={(i) => setActiveIndex(i)}
+            >
+              {mediaPhotos.map((photo, i) => (
+                <Card key={i}>
+                  <img src={photo.src} alt={photo.label || "Frosh event photo"} />
+                  <span className="card-expand-hint">
+                    <Maximize2 size={14} />
+                  </span>
+                  {photo.label && <div className="card-caption">{photo.label}</div>}
+                </Card>
+              ))}
+            </CardSwap>
           </div>
+
+          <p className="media-cardswap-hint">Tap a card to expand it &middot; hover to pause the stack</p>
         </div>
       </div>
+
+      {activeIndex !== null && (
+        <Lightbox
+          photos={mediaPhotos}
+          index={activeIndex}
+          onClose={() => setActiveIndex(null)}
+          onNavigate={(next) => setActiveIndex(next)}
+        />
+      )}
     </div>
   );
 }

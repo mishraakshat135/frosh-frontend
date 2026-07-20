@@ -1,0 +1,125 @@
+.lightbox-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(5, 2, 13, 0.92);
+  backdrop-filter: blur(6px);
+  animation: lightbox-fade-in 0.18s ease;
+  padding: 5vh 4vw;
+}
+
+@keyframes lightbox-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.lightbox-figure {
+  position: relative;
+  max-width: min(90vw, 1100px);
+  max-height: 88vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: lightbox-pop 0.22s ease;
+}
+
+@keyframes lightbox-pop {
+  from {
+    transform: scale(0.96);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.lightbox-figure img {
+  max-width: 100%;
+  max-height: 80vh;
+  object-fit: contain;
+  border-radius: 12px;
+  border: 1px solid rgba(49, 231, 255, 0.3);
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.6);
+}
+
+.lightbox-figure figcaption {
+  margin-top: 14px;
+  color: #faf6ee;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  opacity: 0.8;
+}
+
+.lightbox-close,
+.lightbox-nav {
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(49, 231, 255, 0.3);
+  color: #faf6ee;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.lightbox-close:hover,
+.lightbox-nav:hover {
+  background: rgba(49, 231, 255, 0.16);
+  color: #31e7ff;
+  border-color: #31e7ff;
+}
+
+.lightbox-close {
+  top: 24px;
+  right: 24px;
+  width: 42px;
+  height: 42px;
+  border-radius: 999px;
+  z-index: 210;
+}
+
+.lightbox-nav {
+  top: 50%;
+  transform: translateY(-50%);
+  width: 48px;
+  height: 48px;
+  border-radius: 999px;
+  z-index: 210;
+}
+
+.lightbox-prev {
+  left: 20px;
+}
+
+.lightbox-next {
+  right: 20px;
+}
+
+@media (max-width: 640px) {
+  .lightbox-nav {
+    width: 38px;
+    height: 38px;
+  }
+  .lightbox-prev {
+    left: 8px;
+  }
+  .lightbox-next {
+    right: 8px;
+  }
+  .lightbox-close {
+    top: 14px;
+    right: 14px;
+  }
+}
