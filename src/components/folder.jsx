@@ -1,188 +1,161 @@
+import { useState } from 'react';
+import { useNavigate } from "react-router-dom"
 
-import { useState, useEffect } from "react";
-import SoftAurora from "./SoftAurora/SoftAurora";
-import { FaInstagram, FaLinkedinIn, FaYoutube, FaEnvelope } from "react-icons/fa";
+const darkenColor = (hex, percent) => {
+    let color = hex.startsWith('#') ? hex.slice(1) : hex;
+    if (color.length === 3) {
+        color = color.split('').map(c => c + c).join('');
+    }
+    const num = parseInt(color, 16);
+    let r = (num >> 16) & 0xff;
+    let g = (num >> 8) & 0xff;
+    let b = num & 0xff;
+    r = Math.max(0, Math.min(255, Math.floor(r * (1 - percent))));
+    g = Math.max(0, Math.min(255, Math.floor(g * (1 - percent))));
+    b = Math.max(0, Math.min(255, Math.floor(b * (1 - percent))));
+    return '#' + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1).toUpperCase();
+};
 
-export default function Home() {
-  const [showButton, setShowButton] = useState(false);
+const Folder = ({ color = '#FFA500', size = 1, items = [], className = '' }) => {
+    const maxItems = 3;
+    const papers = items.slice(0, maxItems);
+    while (papers.length < maxItems) papers.push(null);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setShowButton(window.scrollY > 300);
+    const [open, setOpen] = useState(false);
+    const [paperOffsets, setPaperOffsets] = useState(
+        Array.from({ length: maxItems }, () => ({ x: 0, y: 0 }))
+    );
+
+    const folderBackColor = darkenColor(color, 0.08);
+    const paper1 = darkenColor('#ffffff', 0.1);
+    const paper2 = darkenColor('#ffffff', 0.05);
+    const paper3 = '#ffffff';
+
+    const handleClick = () => {
+        setOpen(prev => !prev);
+        if (open) {
+            setPaperOffsets(Array.from({ length: maxItems }, () => ({ x: 0, y: 0 })));
+        }
+
     };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
 
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
+    const handlePaperMouseMove = (e, index) => {
+        if (!open) return;
+        const rect = e.currentTarget.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+        const offsetX = (e.clientX - centerX) * 0.15;
+        const offsetY = (e.clientY - centerY) * 0.15;
+        setPaperOffsets(prev => {
+            const newOffsets = [...prev];
+            newOffsets[index] = { x: offsetX, y: offsetY };
+            return newOffsets;
+        });
+    };
 
-  return (
-    <>
-      
-      {/* Spacer to reveal footer */}
-      <div style={{ height: "30vh", backgroundColor: "#0a0a0a", position: "fixed", bottom:0 ,zIndex: 1 }}></div>
+    const handlePaperMouseLeave = (e, index) => {
+        setPaperOffsets(prev => {
+            const newOffsets = [...prev];
+            newOffsets[index] = { x: 0, y: 0 };
+            return newOffsets;
+        });
+    };
 
-      {/* Footer with Aurora Background */}
-      <footer style={{ 
-        padding: "40px 30px 20px", 
-        position: "relative", 
-        zIndex: 0,
-        minHeight: "0vh",
-        overflow: "hidden",
-        backgroundColor: "#0a0a0a"
-      }}>
-        {/* Aurora Background - Only in Footer */}
-        <div style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          width: "100%",
-          height: "100%",
-          zIndex: 0
-        }}>
-          <SoftAurora
-            speed={0.6}
-            scale={1.5}
-            brightness={1.0}
-            color1="#0b1440"
-            color2="#22d3ee"
-            noiseFrequency={2.5}
-            noiseAmplitude={1.0}
-            bandHeight={0.5}
-            bandSpread={1.0}
-            octaveDecay={0.1}
-            layerOffset={0}
-            colorSpeed={1.0}
-            enableMouseInteraction={true}
-            mouseInfluence={0.25}
-          />
-        </div>
+    const folderStyle = {
+        '--folder-color': color,
+        '--folder-back-color': folderBackColor,
+        '--paper-1': paper1,
+        '--paper-2': paper2,
+        '--paper-3': paper3
+    };
 
-        {/* Footer Content */}
-        <div style={{ position: "relative", zIndex: 1 }}>
-          <div
-          className="flex flex-col md:flex-row items-center justify-around md:gap-10"
-            // style={{
-            //   display: "grid",
-            //   gridTemplateColumns: "1fr auto 1fr",
-            //   alignItems: "center",
-            //   gap: "30px",
-            //   maxWidth: "1200px",
-            //   margin: "0 auto",
-            // }}
-          >
-            {/* Contact Info - Left Side */}
-            <div 
-            className ="text-left md:mr-55"
-            //style={{ textAlign: "left", margin: "0 80px 0 20px" }}
-            >
-              <h1 style={{ fontSize: "22px", fontWeight: 700, margin: "0 0 12px", color: "#5ee1e6" }}>
-                Contact Us
-              </h1>
-              
-              <div className="contact-line" style={{ margin: "2px 0" }}>
-                <span style={{ fontSize: "15px", color: "#fff" }}>
-                  <span className="contact-name">Snehil Jhawar</span>
-                  <span className="contact-separator"> </span>
-                  <span className="contact-number">+91 90572 41613</span>
-                </span>
-              </div>
-              
-              <div className="contact-line" style={{ margin: "2px 0" }}>
-                <span style={{ fontSize: "15px", color: "#fff" }}>
-                  <span className="contact-name">Nandini</span>
-                  <span className="contact-separator"> </span>
-                  <span className="contact-number">+91 70090 36797</span>
-                </span>
-              </div>
-              
-              <div className="contact-line" style={{ margin: "2px 0" }}>
-                <span style={{ fontSize: "15px", color: "#fff" }}>
-                  <span className="contact-name">Vanshaj Kaushik</span>
-                  <span className="contact-separator"> </span>
-                  <span className="contact-number">+91 84398 18347</span>
-                </span>
-              </div>
-            </div>
+    const scaleStyle = { transform: `scale(${size})` };
 
-            {/* Logo - Center */}
+    const getOpenTransform = index => {
+        if (index === 0) return 'translate(-120%, -70%) rotate(-15deg)';
+        if (index === 1) return 'translate(10%, -70%) rotate(15deg)';
+        if (index === 2) return 'translate(-50%, -100%) rotate(5deg)';
+        return '';
+    };
+
+    const navigate = useNavigate();
+
+    return (
+        <div style={scaleStyle} className={className}>
             <div
-              className="text-center flex flex-column items-cneter w-20 md:w-60  md:mr-65"
-            // style={{ 
-            //   textAlign: "center",
-            //   display: "flex",
-            //   flexDirection: "column",
-            //   alignItems: "center",
-            //   margin: "0 0 0 120px"
-            // }}
+                className={`group relative transition-all duration-200 ease-in cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 ${!open ? 'hover:-translate-y-2' : ''
+                    }`}
+                style={{ ...folderStyle, transform: open ? 'translateY(-8px)' : undefined }}
+                onClick={handleClick}
+                onKeyDown={e => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        handleClick();
+                    }
+                }}
+                tabIndex={0}
+                role="button"
+                aria-expanded={open}
+                aria-label={open ? 'Close folder' : 'Open folder'}
             >
-              <img
-                src="/Logo.webp"
-                alt="Frosh Logo 2026"
-                style={{ width: "280px" }}
-                className="logo-glow"
-              />
+                <div
+                    className="relative w-[100px] h-[80px] rounded-tl-0 rounded-tr-[10px] rounded-br-[10px] rounded-bl-[10px]"
+                    style={{ backgroundColor: folderBackColor }}
+                >
+                    <span
+                        className="absolute z-0 bottom-[98%] left-0 w-[30px] h-[10px] rounded-tl-[5px] rounded-tr-[5px] rounded-bl-0 rounded-br-0"
+                        style={{ backgroundColor: folderBackColor }}
+                    ></span>
+                    {papers.map((item, i) => {
+                        let sizeClasses = '';
+                        if (i === 0) sizeClasses = open ? 'w-[70%] h-[80%]' : 'w-[70%] h-[80%]';
+                        if (i === 1) sizeClasses = open ? 'w-[80%] h-[80%]' : 'w-[80%] h-[70%]';
+                        if (i === 2) sizeClasses = open ? 'w-[90%] h-[80%]' : 'w-[90%] h-[60%]';
+
+                        const transformStyle = open
+                            ? `${getOpenTransform(i)} translate(${paperOffsets[i].x}px, ${paperOffsets[i].y}px)`
+                            : undefined;
+
+                        return (
+                            <div
+                                key={i}
+                                onMouseMove={e => handlePaperMouseMove(e, i)}
+                                onMouseLeave={e => handlePaperMouseLeave(e, i)}
+                                
+                                className={`absolute pointers-event-none z-20 bottom-[10%] left-1/2 transition-all duration-300 ease-in-out ${!open ? 'transform -translate-x-1/2 translate-y-[10%] group-hover:translate-y-0' : 'hover:scale-110'
+                                    } ${sizeClasses}`}
+                                style={{
+                                    ...(!open ? {} : { transform: transformStyle }),
+                                    backgroundColor: i === 0 ? paper1 : i === 1 ? paper2 : paper3,
+                                    borderRadius: '10px'
+                                }}
+                            >
+                                {item}
+                            </div>
+                        );
+                    })}
+                    <div
+                        className={`absolute z-30 w-full h-full origin-bottom transition-all duration-300 ease-in-out ${!open ? 'group-hover:transform-[skew(15deg)_scaleY(0.6)]' : ''
+                            }`}
+                        style={{
+                            backgroundColor: color,
+                            borderRadius: '5px 10px 10px 10px',
+                            ...(open && { transform: 'skew(15deg) scaleY(0.6)' })
+                        }}
+                    ></div>
+                    <div
+                        className={`absolute z-30 w-full h-full origin-bottom transition-all duration-300 ease-in-out ${!open ? 'group-hover:transform-[skew(-15deg)_scaleY(0.6)]' : ''
+                            }`}
+                        style={{
+                            backgroundColor: color,
+                            borderRadius: '5px 10px 10px 10px',
+                            ...(open && { transform: 'skew(-15deg) scaleY(0.6)' })
+                        }}
+                    ></div>
+                </div>
             </div>
-
-            {/* Hyperlinks - Right Side - STRAIGHT HORIZONTAL LINE */}
-            <div
-              className="flex flex-row justify-center items-center gap-3 flex-nowrap"
-            >
-              <a
-                href="https://www.instagram.com/froshtiet"
-                target="_blank"
-                aria-label="Instagram"
-                className="social-icon social-icon--instagram"
-                rel="noopener noreferrer"
-              >
-                <FaInstagram />
-              </a>
-              <a
-                href="https://in.linkedin.com/company/frosh-tiet"
-                target="_blank"
-                aria-label="LinkedIn"
-                className="social-icon social-icon--linkedin"
-                rel="noopener noreferrer"
-              >
-                <FaLinkedinIn />
-              </a>
-              <a
-                href="https://www.youtube.com/c/FroshTIET"
-                target="_blank"
-                aria-label="YouTube"
-                className="social-icon social-icon--youtube"
-                rel="noopener noreferrer"
-              >
-                <FaYoutube />
-              </a>
-              <a
-                href="mailto:frosh@thapar.edu"
-                aria-label="Email"
-                className="social-icon social-icon--mail"
-              >
-                <FaEnvelope />
-              </a>
-            </div>
-          </div>
-
-          <p style={{ margin: "36px 0 4px", fontSize: "14px", color: "#ccc", textAlign: "center" }}>
-            &copy; Frosh&apos;26
-          </p>
-          <p style={{ margin: "4px 0", fontSize: "13px", color: "#999", textAlign: "center" }}>
-            Made with <span style={{ color: "#e63946" }}>&hearts;</span> by Frosh Team
-          </p>
-
-          <hr style={{ border: "none", borderTop: "1px solid rgba(255,255,255,0.1)", margin: "16px 0 0" }} />
         </div>
-      </footer>
-        {showButton && (
-        <button onClick={scrollToTop} className="back-to-top">
-          ↑
-        </button>
-      )}
+    );
+};
 
-    </>
-  );
-}
+export default Folder;

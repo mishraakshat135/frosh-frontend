@@ -15,6 +15,8 @@ interface Location {
   images: string[]; // one image = no arrows; 2+ = gallery with dots
   description?: string;
   facts?: Record<string, string>;
+  lat: number;
+  lng: number
 }
 
 /* ============================================================
@@ -111,6 +113,14 @@ export default function CampusMap() {
       window.removeEventListener("resize", hideTooltip);
     };
   }, [hideTooltip]);
+
+  const openDirections = () =>{
+    console.log("active location: ", activeLocation)
+    if(!activeLocation)
+      return
+
+    window.open(`https://www.google.com/maps/dir/?api=1&destination=${activeLocation.lat},${activeLocation.lng}`,"_blank")
+  }
 
   return (
     <>
@@ -588,7 +598,9 @@ export default function CampusMap() {
                   </React.Fragment>
                 ))}
               </dl>
+              <button onClick={openDirections} className="bg-blue-400 rounded-2xl w-35 flex justify-center ">Get Directions</button>
             </div>
+            
           </div>
         </div>
       </div>

@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, Maximize2 } from "lucide-react";
-import CardSwap, { Card } from "../components/CardSwap/CardSwap";
+import { ArrowLeft } from "lucide-react";
+import CircularGallery from "../components/CircularGallery/CircularGallery";
 import Lightbox from "../components/Lightbox";
 import { mediaPhotos } from "../data/mediaPhotos";
 import "./media.css";
@@ -9,6 +9,11 @@ import "./media.css";
 export default function Media() {
   const navigate = useNavigate();
   const [activeIndex, setActiveIndex] = useState(null);
+
+  const galleryItems = useMemo(
+    () => mediaPhotos.map(photo => ({ image: photo.src, text: photo.label || "" })),
+    []
+  );
 
   return (
     <div className="media-screen">
@@ -50,35 +55,21 @@ export default function Media() {
               Media
             </h1>
             <p className="mx-auto mt-5 max-w-xl text-sm leading-7 text-white/60 md:text-base">
-              A stack of everything Frosh — tap any photo to see it full size.
+              Drag to spin through the reel — hover a photo to bring it into focus, click to open it full size.
             </p>
           </div>
 
-          <div className="media-cardswap-stage">
-            <CardSwap
-              width={340}
-              height={440}
-              cardDistance={55}
-              verticalDistance={60}
-              delay={4200}
-              pauseOnHover
-              skewAmount={5}
-              easing="elastic"
-              onCardClick={(i) => setActiveIndex(i)}
-            >
-              {mediaPhotos.map((photo, i) => (
-                <Card key={i}>
-                  <img src={photo.src} alt={photo.label || "Frosh event photo"} />
-                  <span className="card-expand-hint">
-                    <Maximize2 size={14} />
-                  </span>
-                  {photo.label && <div className="card-caption">{photo.label}</div>}
-                </Card>
-              ))}
-            </CardSwap>
+          <div className="media-circular-stage">
+            <CircularGallery
+              items={galleryItems}
+              bend={3}
+              textColor="#faf6ee"
+              borderRadius={0.06}
+              font="bold 22px 'Space Grotesk', sans-serif"
+              scrollEase={0.06}
+              onItemClick={(i) => setActiveIndex(i)}
+            />
           </div>
-
-          <p className="media-cardswap-hint">Tap a card to expand it &middot; hover to pause the stack</p>
         </div>
       </div>
 
